@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style (1).css">
+    <link rel="stylesheet" href="script.js">
+  
+</head>
+
+<body>
+    <div class="maindiv" class="jumbotron text-center">
+
+        <div class="centerdiv" class="row">
+
+
+            <h1 id="h1">Welcome To Typing Speed Test</h1>
+            <h2 id="msg" class="h2"></h2>
+            <div class="col-sm-4">
+                <textarea id="mywords" rows="10" cols="90" placeholder="Remember be nice!"></textarea><br><br>
+                <div class="col-sm-4">
+                    <button id="btn" class="mainbtn" value="Start">Start</button>
+                </div>
+            </div>
+         
+        </div> 
+    </div>
+
+
+    <script>
+        const setofWords = ["an authoritative decision; a judicial judgment or decree, especially the judicial determination of the punishment to be inflicted on a convicted criminal:",
+            "There's an ocean of difference between the way people speak English in the US vs. the UK. Are your language skills up to the task of telling the difference? Let's find out!",
+            "A sentence is the largest grammatical unit in language. It communicates a complete thought—an assertion, question, command, or exclamation. In general, assertions and questions—the overwhelming majority of sentences—require a subject and a verb, put together in a way that can stand alone, resulting in what is called an independent clause ( see main clause ): He kicked the ball is a sentence."];
+
+
+
+        const msg = document.getElementById('msg');
+        const mywords = document.getElementById('mywords');
+        const btn = document.getElementById('btn');
+
+        let startTime, endTime;
+
+        const playgame = () => {
+            let number = Math.floor(Math.random() * setofWords.length);
+            msg.innerText = setofWords[number];
+            let date = new Date();
+            startTime = date.getTime();
+            btn.innerText = "Done";
+
+
+        }
+
+        const endPlay = () => {
+            let date = new Date();
+            endTime = date.getTime();
+            let totalTime = ((endTime - startTime) / 1000);
+            console.log(totalTime);
+
+            let totalstr = mywords.value;
+            let wordCount = wordCounter(totalstr);
+
+            let speed = Math.round((wordCount / totalTime) * 60);
+
+            let finalMsg = 'You typed total at' + speed + 'word per minutes';
+            finalMsg += compareWords(msg.innerText, totalstr);
+
+            msg.innerText = finalMsg;
+
+        }
+
+
+        const compareWords = (str1, str2) => {
+            let words1 = str1.split(" ");
+            let words2 = str2.split(" ");
+            let cnt = 0;
+
+            words1.forEach(function (item, index) {
+                if (item == words2[index]) {
+                    cnt++;
+                }
+            })
+
+            let errorWords = (words1.length - cnt);
+            return (cnt + "corect out of" + words1.length + "words and the total number of error are" + errorWords + ".");
+
+        }
+
+        const wordCounter = (str) => {
+            let res = str.split(" ").length;
+            console.log(res);
+            return res;
+
+        }
+
+        btn.addEventListener('click', function () {
+            console.log(this)
+            if (this.innerText == 'Start') {
+                mywords.disabled = false;
+                playgame();
+            } else if (this.innerText == "Done") {
+                mywords.disabled = true;
+                btn.innerText = "Start";
+                endPlay();
+
+            } else if (this.innerText == "Done") {
+
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>
